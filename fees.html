@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fees | SMS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="header_icon.jpg" type="image/x-icon">
+</head>
+<body>
+<header>
+    <img src="header_icon.jpg" alt="Logo" id="header_logo">
+    <h1>Student Management System</h1>
+    <button id="theme">🌙</button>
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html">📋 Students</a></li>
+        <li><a href="marks.html">📝 Marks</a></li>
+        <li><a href="fees.html" class="active">💰 Fees</a></li>
+        <li><a href="attendance.html">📅 Attendance</a></li>
+        <li><a href="add.html">➕ Add Student</a></li>
+    </ul>
+    <button onclick="logout()" style="
+        background: rgba(255,255,255,0.18);
+        border: 1.5px solid rgba(255,255,255,0.35);
+        color: white; padding: 6px 14px;
+        border-radius: 8px; cursor: pointer;
+        font-size: 0.875rem; font-weight: 600;">
+        🚪 Logout
+    </button>
+</nav>
+
+<div class="page-content">
+    <!-- ADD FEES FORM -->
+    <div class="section-header"><span class="section-title">Add Fee Record</span></div>
+    <div class="inline-form-card">
+        <form id="add-fees-form">
+            <div class="form-grid">
+                <div class="form-group"><label>Student ID</label><input type="number" id="fees-studentId" placeholder="Student ID" required></div>
+                <div class="form-group"><label>Amount (₹)</label><input type="number" id="fees-amount" step="0.01" placeholder="e.g. 75000" required></div>
+                <div class="form-group"><label>Due Date</label><input type="date" id="fees-dueDate" required></div>
+                <div class="form-group"><label>Paid Date</label><input type="date" id="fees-paidDate"></div>
+                <div class="form-group"><label>Status</label>
+                    <select id="fees-status" required>
+                        <option value="">Select Status</option>
+                        <option value="PAID">PAID</option>
+                        <option value="PENDING">PENDING</option>
+                        <option value="OVERDUE">OVERDUE</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">➕ Add Fee Record</button>
+                <button type="reset" class="btn-outline">Clear</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- FILTER -->
+    <div class="section-header" style="margin-top:28px;">
+        <span class="section-title">Fee Records</span>
+        <div class="filter-group">
+            <input type="number" id="filter-fees-studentId" placeholder="Filter by Student ID">
+            <select id="filter-fees-status">
+                <option value="">All Status</option>
+                <option value="PAID">PAID</option>
+                <option value="PENDING">PENDING</option>
+                <option value="OVERDUE">OVERDUE</option>
+            </select>
+            <button class="btn-primary" onclick="filterFees()">🔍 Filter</button>
+            <button class="btn-ghost" onclick="loadAllFees()">Show All</button>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Fee ID</th>
+                        <th>Student ID</th>
+                        <th>Student Name</th>
+                        <th>Amount (₹)</th>
+                        <th>Due Date</th>
+                        <th>Paid Date</th>
+                        <th>Status</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="fees-tbody">
+                    <tr><td colspan="10"><div class="empty-state"><div class="empty-icon">💰</div><p>Loading fee records…</p></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- UPDATE FEES MODAL -->
+<div class="update-form" id="fees-modal" style="display:none;">
+    <form id="update-fees-form">
+        <h2 class="form-title">✏️ Edit Fee Record</h2>
+        <div class="form-group"><label>Amount (₹)</label><input type="number" id="uf-amount" step="0.01" required></div>
+        <div class="form-group"><label>Due Date</label><input type="date" id="uf-dueDate" required></div>
+        <div class="form-group"><label>Paid Date</label><input type="date" id="uf-paidDate"></div>
+        <div class="form-group"><label>Status</label>
+            <select id="uf-status" required>
+                <option value="PAID">PAID</option>
+                <option value="PENDING">PENDING</option>
+                <option value="OVERDUE">OVERDUE</option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Update</button>
+            <button type="button" class="btn-ghost" onclick="closeModal('fees-modal')">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<footer><p>&copy; 2026 Student Management System — All rights reserved.</p></footer>
+<script src="script.js"></script>
+</body>
+</html>

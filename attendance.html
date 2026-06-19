@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance | SMS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="header_icon.jpg" type="image/x-icon">
+</head>
+<body>
+<header>
+    <img src="header_icon.jpg" alt="Logo" id="header_logo">
+    <h1>Student Management System</h1>
+    <button id="theme">🌙</button>
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html">📋 Students</a></li>
+        <li><a href="marks.html">📝 Marks</a></li>
+        <li><a href="fees.html">💰 Fees</a></li>
+        <li><a href="attendance.html" class="active">📅 Attendance</a></li>
+        <li><a href="add.html">➕ Add Student</a></li>
+    </ul>
+    <button onclick="logout()" style="
+        background: rgba(255,255,255,0.18);
+        border: 1.5px solid rgba(255,255,255,0.35);
+        color: white; padding: 6px 14px;
+        border-radius: 8px; cursor: pointer;
+        font-size: 0.875rem; font-weight: 600;">
+        🚪 Logout
+    </button>
+</nav>
+
+<div class="page-content">
+    <!-- MARK ATTENDANCE -->
+    <div class="section-header"><span class="section-title">Mark Attendance</span></div>
+    <div class="inline-form-card">
+        <form id="add-attendance-form">
+            <div class="form-grid">
+                <div class="form-group"><label>Student ID</label><input type="number" id="att-studentId" placeholder="Student ID" required></div>
+                <div class="form-group"><label>Date</label><input type="date" id="att-date" required></div>
+                <div class="form-group"><label>Status</label>
+                    <select id="att-status" required>
+                        <option value="">Select Status</option>
+                        <option value="PRESENT">PRESENT</option>
+                        <option value="ABSENT">ABSENT</option>
+                        <option value="LATE">LATE</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">➕ Mark Attendance</button>
+                <button type="reset" class="btn-outline">Clear</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- FILTER -->
+    <div class="section-header" style="margin-top:28px;">
+        <span class="section-title">Attendance Records</span>
+        <div class="filter-group">
+            <input type="number" id="filter-att-studentId" placeholder="Student ID">
+            <input type="date" id="filter-att-date">
+            <select id="filter-att-status">
+                <option value="">All Status</option>
+                <option value="PRESENT">PRESENT</option>
+                <option value="ABSENT">ABSENT</option>
+                <option value="LATE">LATE</option>
+            </select>
+            <button class="btn-primary" onclick="filterAttendance()">🔍 Filter</button>
+            <button class="btn-ghost" onclick="loadAllAttendance()">Show All</button>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Att. ID</th>
+                        <th>Student ID</th>
+                        <th>Student Name</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="att-tbody">
+                    <tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📅</div><p>Loading attendance…</p></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- UPDATE ATTENDANCE MODAL -->
+<div class="update-form" id="att-modal" style="display:none;">
+    <form id="update-att-form">
+        <h2 class="form-title">✏️ Edit Attendance</h2>
+        <div class="form-group"><label>Date</label><input type="date" id="ua-date" required></div>
+        <div class="form-group"><label>Status</label>
+            <select id="ua-status" required>
+                <option value="PRESENT">PRESENT</option>
+                <option value="ABSENT">ABSENT</option>
+                <option value="LATE">LATE</option>
+            </select>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Update</button>
+            <button type="button" class="btn-ghost" onclick="closeModal('att-modal')">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<footer><p>&copy; 2026 Student Management System — All rights reserved.</p></footer>
+<script src="script.js"></script>
+</body>
+</html>

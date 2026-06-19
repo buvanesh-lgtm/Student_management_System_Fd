@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks | SMS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="header_icon.jpg" type="image/x-icon">
+</head>
+<body>
+<header>
+    <img src="header_icon.jpg" alt="Logo" id="header_logo">
+    <h1>Student Management System</h1>
+    <button id="theme">🌙</button>
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html">📋 Students</a></li>
+        <li><a href="marks.html" class="active">📝 Marks</a></li>
+        <li><a href="fees.html">💰 Fees</a></li>
+        <li><a href="attendance.html">📅 Attendance</a></li>
+        <li><a href="add.html">➕ Add Student</a></li>
+    </ul>
+    <button onclick="logout()" style="
+        background: rgba(255,255,255,0.18);
+        border: 1.5px solid rgba(255,255,255,0.35);
+        color: white; padding: 6px 14px;
+        border-radius: 8px; cursor: pointer;
+        font-size: 0.875rem; font-weight: 600;">
+        🚪 Logout
+    </button>
+</nav>
+
+<div class="page-content">
+    <!-- ADD MARKS FORM -->
+    <div class="section-header"><span class="section-title">Add Marks</span></div>
+    <div class="inline-form-card">
+        <form id="add-marks-form">
+            <div class="form-grid">
+                <div class="form-group"><label>Student ID</label><input type="number" id="marks-studentId" placeholder="Student ID" required></div>
+                <div class="form-group"><label>Subject</label><input type="text" id="marks-subject" placeholder="e.g. Mathematics" required></div>
+                <div class="form-group"><label>Mark Scored</label><input type="number" id="marks-mark" step="0.1" placeholder="e.g. 85" required></div>
+                <div class="form-group"><label>Total Mark</label><input type="number" id="marks-totalMark" step="0.1" placeholder="e.g. 100" required></div>
+                <div class="form-group"><label>Exam Date</label><input type="date" id="marks-examDate" required></div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">➕ Add Marks</button>
+                <button type="reset" class="btn-outline">Clear</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- FILTER -->
+    <div class="section-header" style="margin-top:28px;">
+        <span class="section-title">View Marks</span>
+        <div class="filter-group">
+            <input type="number" id="filter-studentId" placeholder="Filter by Student ID">
+            <input type="text" id="filter-subject" placeholder="Filter by Subject">
+            <button class="btn-primary" onclick="filterMarks()">🔍 Filter</button>
+            <button class="btn-ghost" onclick="loadAllMarks()">Show All</button>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Student ID</th>
+                        <th>Student Name</th>
+                        <th>Subject</th>
+                        <th>Mark</th>
+                        <th>Total</th>
+                        <th>Percentage</th>
+                        <th>Exam Date</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="marks-tbody">
+                    <tr><td colspan="10"><div class="empty-state"><div class="empty-icon">📝</div><p>Loading marks…</p></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- UPDATE MARKS MODAL -->
+<div class="update-form" id="marks-modal" style="display:none;">
+    <form id="update-marks-form">
+        <h2 class="form-title">✏️ Edit Marks</h2>
+        <div class="form-group"><label>Subject</label><input type="text" id="um-subject" required></div>
+        <div class="form-group"><label>Mark Scored</label><input type="number" id="um-mark" step="0.1" required></div>
+        <div class="form-group"><label>Total Mark</label><input type="number" id="um-totalMark" step="0.1" required></div>
+        <div class="form-group"><label>Exam Date</label><input type="date" id="um-examDate" required></div>
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Update</button>
+            <button type="button" class="btn-ghost" onclick="closeModal('marks-modal')">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<footer><p>&copy; 2026 Student Management System — All rights reserved.</p></footer>
+<script src="script.js"></script>
+</body>
+</html>

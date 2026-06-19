@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Student Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="header_icon.jpg" type="image/x-icon">
+    <style>
+        .login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: 0 8px 40px rgba(124, 58, 237, 0.18);
+            padding: 36px 36px 32px;
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid var(--border);
+            animation: slideUp 0.25s ease;
+        }
+
+        .theme-top {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 8px;
+        }
+
+        .theme-top button {
+            background: rgba(124,58,237,0.1);
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .login-logo img {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            object-fit: cover;
+        }
+
+        .login-logo h2 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-top: 10px;
+        }
+
+        .login-logo p {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-top: 3px;
+        }
+
+        /* Tab switcher */
+        .tab-row {
+            display: flex;
+            background: var(--input-bg);
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 22px;
+            border: 1.5px solid var(--border);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 9px;
+            border: none;
+            background: transparent;
+            border-radius: 7px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #6b7280;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 8px rgba(124,58,237,0.3);
+        }
+
+        /* Alert boxes */
+        .alert {
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            display: none;
+        }
+
+        .alert-error   { background: #fee2e2; color: #dc2626; }
+        .alert-success { background: #dcfce7; color: #166534; }
+
+        body.dark .alert-error   { background: #450a0a; color: #fca5a5; }
+        body.dark .alert-success { background: #14532d; color: #86efac; }
+
+        /* Hide/show panels */
+        .panel { display: none; }
+        .panel.active { display: block; }
+
+        /* Divider */
+        .divider {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9ca3af;
+            margin: 6px 0 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-wrapper">
+    <div class="login-card">
+
+        <div class="theme-top">
+            <button id="theme" title="Toggle dark mode">🌙</button>
+        </div>
+
+        <div class="login-logo">
+            <img src="header_icon.jpg" alt="Logo">
+            <h2>Student Management System</h2>
+            <p id="card-subtitle">Sign in to your account</p>
+        </div>
+
+        <!-- Tab switcher -->
+        <div class="tab-row">
+            <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">🔐 Login</button>
+            <button class="tab-btn"        id="tab-register" onclick="switchTab('register')">📝 Register</button>
+        </div>
+
+        <!-- ===== LOGIN PANEL ===== -->
+        <div class="panel active" id="panel-login">
+            <div class="alert alert-error" id="login-error"></div>
+
+            <div class="form-group">
+                <label for="login-username">Username</label>
+                <input type="text" id="login-username" placeholder="Enter username" autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter password" autocomplete="current-password">
+            </div>
+
+            <div class="form-actions" style="margin-top:20px;">
+                <button class="btn-primary" id="login-btn" onclick="doLogin()">🔐 Sign In</button>
+            </div>
+
+            <p class="divider">Don't have an account? Click <strong>Register</strong> above.</p>
+        </div>
+
+        <!-- ===== REGISTER PANEL ===== -->
+        <div class="panel" id="panel-register">
+            <div class="alert alert-error"   id="reg-error"></div>
+            <div class="alert alert-success" id="reg-success"></div>
+
+            <div class="form-group">
+                <label for="reg-username">Username</label>
+                <input type="text" id="reg-username" placeholder="Choose a username">
+            </div>
+
+            <div class="form-group">
+                <label for="reg-password">Password</label>
+                <input type="password" id="reg-password" placeholder="Choose a password">
+            </div>
+
+            <div class="form-group">
+                <label for="reg-confirm">Confirm Password</label>
+                <input type="password" id="reg-confirm" placeholder="Re-enter password">
+            </div>
+
+            <div class="form-actions" style="margin-top:20px;">
+                <button class="btn-primary" id="reg-btn" onclick="doRegister()">📝 Create Account</button>
+            </div>
+
+            <p class="divider">Already have an account? Click <strong>Login</strong> above.</p>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const AUTH_URL = "http://localhost:8080/api/auth";
+
+    // ── Theme ──────────────────────────────────────────
+    const themeBtn = document.getElementById("theme");
+    themeBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        const isDark = document.body.classList.contains("dark");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+        themeBtn.textContent = isDark ? "☀️" : "🌙";
+    });
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark");
+        themeBtn.textContent = "☀️";
+    }
+
+    // ── Redirect if already logged in ─────────────────
+    if (localStorage.getItem("sms_token")) {
+        window.location.href = "index.html";
+    }
+
+    // ── Tab switcher ───────────────────────────────────
+    function switchTab(tab) {
+        document.getElementById("panel-login").classList.toggle("active", tab === "login");
+        document.getElementById("panel-register").classList.toggle("active", tab === "register");
+        document.getElementById("tab-login").classList.toggle("active", tab === "login");
+        document.getElementById("tab-register").classList.toggle("active", tab === "register");
+        document.getElementById("card-subtitle").textContent =
+            tab === "login" ? "Sign in to your account" : "Create a new account";
+        clearAlerts();
+    }
+
+    function clearAlerts() {
+        ["login-error","reg-error","reg-success"].forEach(id => {
+            const el = document.getElementById(id);
+            el.style.display = "none";
+            el.textContent = "";
+        });
+    }
+
+    function showAlert(id, msg) {
+        const el = document.getElementById(id);
+        el.textContent = msg;
+        el.style.display = "block";
+    }
+
+    // ── Enter key support ──────────────────────────────
+    document.getElementById("login-password").addEventListener("keydown", e => {
+        if (e.key === "Enter") doLogin();
+    });
+    document.getElementById("reg-confirm").addEventListener("keydown", e => {
+        if (e.key === "Enter") doRegister();
+    });
+
+    // ── LOGIN ──────────────────────────────────────────
+    async function doLogin() {
+        const username = document.getElementById("login-username").value.trim();
+        const password = document.getElementById("login-password").value.trim();
+        const btn = document.getElementById("login-btn");
+
+        clearAlerts();
+
+        if (!username || !password) {
+            showAlert("login-error", "Please enter both username and password.");
+            return;
+        }
+
+        btn.textContent = "Signing in…";
+        btn.disabled = true;
+
+        try {
+            const res = await fetch(AUTH_URL + "/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                localStorage.setItem("sms_token", data.token);
+                localStorage.setItem("sms_user", data.username);
+                window.location.href = "index.html";
+            } else {
+                showAlert("login-error", "Invalid username or password.");
+            }
+        } catch {
+            showAlert("login-error", "Cannot connect to server. Make sure the backend is running.");
+        } finally {
+            btn.textContent = "🔐 Sign In";
+            btn.disabled = false;
+        }
+    }
+
+    // ── REGISTER ───────────────────────────────────────
+    async function doRegister() {
+        const username = document.getElementById("reg-username").value.trim();
+        const password = document.getElementById("reg-password").value.trim();
+        const confirm  = document.getElementById("reg-confirm").value.trim();
+        const btn = document.getElementById("reg-btn");
+
+        clearAlerts();
+
+        if (!username || !password || !confirm) {
+            showAlert("reg-error", "All fields are required.");
+            return;
+        }
+        if (password.length < 6) {
+            showAlert("reg-error", "Password must be at least 6 characters.");
+            return;
+        }
+        if (password !== confirm) {
+            showAlert("reg-error", "Passwords do not match.");
+            return;
+        }
+
+        btn.textContent = "Creating account…";
+        btn.disabled = true;
+
+        try {
+            const res = await fetch(AUTH_URL + "/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (res.ok) {
+                showAlert("reg-success", "✅ Account created! You can now log in.");
+                document.getElementById("reg-username").value = "";
+                document.getElementById("reg-password").value = "";
+                document.getElementById("reg-confirm").value  = "";
+                // Auto switch to login tab after 1.5s
+                setTimeout(() => switchTab("login"), 1500);
+            } else {
+                const msg = await res.text();
+                showAlert("reg-error", msg || "Registration failed. Username may already exist.");
+            }
+        } catch {
+            showAlert("reg-error", "Cannot connect to server. Make sure the backend is running.");
+        } finally {
+            btn.textContent = "📝 Create Account";
+            btn.disabled = false;
+        }
+    }
+</script>
+
+</body>
+</html>
