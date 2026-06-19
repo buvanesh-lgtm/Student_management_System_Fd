@@ -1,5 +1,5 @@
 // ==================== BASE URLS ====================
-const BASE = "http://localhost:8080/api";
+const BASE = "https://advanced-sms-backend.onrender.com/api";
 const STUDENT_URL    = BASE + "/student";
 const MARKS_URL      = BASE + "/marks";
 const FEES_URL       = BASE + "/fees";
